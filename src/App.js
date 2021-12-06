@@ -1,24 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { useState, useEffect } from 'react'
+//Components
+import Navbar from './components/Navbar'
 
-function App() {
+//PAGES
+import Home from './pages/Home';
+import RestaurantsIndex from './pages/restaurants/Index';
+import RestaurantsShow from './pages/restaurants/Show';
+import RestaurantsCreate from './pages/restaurants/Create';
+import RestaurantsEdit from './pages/restaurants/Edit';
+
+import About from './pages/About';
+import Contact from './pages/Contact';
+import PageNotFound from './pages/PageNotFound';
+
+
+const App = () => {
+  const [authenticated, setAuthenticated] = useState(false)
+  let protectedRestaurants
+
+  useEffect(() => {
+    if(localStorage.getItem('token'))
+    {
+      setAuthenticated(true)
+    }
+  }, [])
+
+  const onAuthenticated = (auth, token) => {
+    setAuthenticated(auth)
+    if(auth){
+      localStorage.setItem('token', token)
+    }
+    else {
+      localStorage.removeItem('token')
+    }
+    
+  }
+
+  if(authenticated) {
+    protectedRestaurants = (
+      <>
+        <Route path="/restaurants/create" element={<RestaurantsCreate />} />
+        <Route path="/restaurants/:_id/edit" element={<RestaurantsEdit />} />
+       
+      </>
+    )
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar onAuthenticated={onAuthenticated} authenticated={authenticated} />
+      <Routes>
+        <Route path="/" element={<Home onAuthenticated={onAuthenticated} authenticated={authenticated} />} />
+        <Route path="/restaurants" element={<RestaurantsIndex />} />
+        <Route path="/restaurants/:_id" element={<RestaurantsShow />} />
+        {protectedRestaurants}
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </Router>
   );
 }
 
