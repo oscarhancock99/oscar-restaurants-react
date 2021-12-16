@@ -26,16 +26,16 @@ const Create = () => {
   const submitForm = () => {
     console.log(form)
 
-    let token = localStorage.getItem('token')
+    let auth_token = localStorage.getItem('auth_token')
 
     axios.post('http://localhost:8001/restaurants', form, {
       headers: {
-        "Authorization": `Bearer ${token}`
+        "Authorization": `Bearer ${auth_token}`
       }
     })
         .then(response => {
           console.log(response.data)
-          navigate(`/restaurants/${response.data._id}`)
+          navigate(`/restaurants`)
         })
         .catch(err => console.log(err))
   }
