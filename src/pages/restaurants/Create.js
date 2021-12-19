@@ -1,11 +1,16 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { TextField, MenuItem, FormControl, Select, InputLabel, Button } from '@mui/material';
+import { TextField, MenuItem, FormControl, Select, InputLabel, Button, Card, Container, buttonBaseClasses } from '@mui/material';
 import { useNavigate } from 'react-router-dom'
+import userEvent from '@testing-library/user-event';
+import { create } from '@mui/material/styles/createTransitions';
 
 // import { LocalizationProvider, DateTimePicker } from '@mui/lab'
 
 // import AdapterMoment from '@mui/lab/AdapterMoment'
+
+// Within my pages folder i have a restaurants folder and in that folder i have the pages which allow the user
+// to create,edit,update and show a particular restuarant.
 
 
 const Create = () => {
@@ -39,9 +44,19 @@ const Create = () => {
         })
         .catch(err => console.log(err))
   }
+
+  // When creating a restaurant axios will retreive the request in the form of a post request, the bearer 
+  // token is created when the request has been successful. then navigate to restaurants index page
+  // if not throw a catch error unauthorized
   
     return (
+
+      // Inside the return statement the user will see the fields that they will have to fill in order to 
+      // create a restaurant. once the the fields are complete the user hits the submit button 
+
+      <Container maxWidth="sm">
       <div>
+        <Card>
         <h2>Create</h2>
 
         <div className="form-group">
@@ -93,8 +108,10 @@ const Create = () => {
         
 
         <Button onClick={submitForm} variant="contained">Submit</Button>
-        
+        </Card>
       </div>
+    </Container>
+
     )
   }
   

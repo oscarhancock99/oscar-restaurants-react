@@ -17,18 +17,22 @@ const Navbar = props => {
   const restaurants = () => {
     navigate('/restaurants')
   }
-  const about = () => {
-    navigate('/about')
-  }
-  const contact = () => {
-    navigate('/contact')
-  }
+  // const about = () => {
+  //   navigate('/about')
+  // }
+  // const contact = () => {
+  //   navigate('/contact')
+  // }
   if(props.authenticated){
     logoutButton = (
         // <button onClick={logout}>Logout</button>
         logoutButton = <Button onClick={logout} color="inherit">Logout</Button>
     )
   }
+
+  // In the navbar im using the useNavigate hook which allows the user to navigate through the various 
+  // pages within the application, if the user selects home useNavigate will navigate the user to the 
+  // home page
 
   return (
     <>
@@ -41,8 +45,8 @@ const Navbar = props => {
           </Typography>
           <Button onClick={home} color="inherit">Home</Button>
           <Button onClick={restaurants} color="inherit">Restaurants</Button>
-          <Button onClick={about} color="inherit">About</Button>
-          <Button onClick={contact} color="inherit">Contact</Button>
+          {/* <Button onClick={about} color="inherit">About</Button>
+          <Button onClick={contact} color="inherit">Contact</Button> */}
           {logoutButton}
         </Toolbar>
       </AppBar>

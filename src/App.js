@@ -1,6 +1,11 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { useState, useEffect } from 'react'
 //Components
+
+// My components consist of a navbar login and Register 
+// The components are functions that accepts inputs for example
+// props and returns a react element. 
+
 import Navbar from './components/Navbar'
 
 //PAGES
@@ -13,7 +18,11 @@ import RestaurantsEdit from './pages/restaurants/Edit';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import PageNotFound from './pages/PageNotFound';
+import RegisterForm from './components/RegisterForm'
 
+// Within the app application is where all the pages for my application are being imported,
+// The app page is the main parent of the application and the pages within the parent are its 
+// children 
 
 const App = () => {
   const [authenticated, setAuthenticated] = useState(false)
@@ -25,6 +34,7 @@ const App = () => {
       setAuthenticated(true)
     }
   }, [])
+  // If the user has an auth token within their console the user is authenticated
 
   const onAuthenticated = (auth, auth_token) => {
     setAuthenticated(auth)
@@ -37,6 +47,8 @@ const App = () => {
     
   }
 
+  // If the user is authenticated give them an authtoken that allows them to create and edit
+
   if(authenticated) {
     protectedRestaurants = (
       <>
@@ -44,6 +56,8 @@ const App = () => {
         <Route path="/restaurants/:_id/edit" element={<RestaurantsEdit />} />
        
       </>
+      // if the user is authenticated allow them to utilise the create and edit Restaurant 
+      // functionality
     )
   }
 
